@@ -1,0 +1,145 @@
+/* EasyMDE — dark theme compatible */
+
+.EasyMDEContainer {
+    --editor-bg:       #1e1e2e;
+    --editor-fg:       #cdd6f4;
+    --toolbar-bg:      #181825;
+    --toolbar-border:  #45475a;
+    --toolbar-icon:    #cdd6f4;
+    --toolbar-hover:   #313244;
+    --toolbar-active:  #45475a;
+    --preview-bg:      #1e1e2e;
+    --preview-fg:      #cdd6f4;
+    --preview-border:  #45475a;
+    --separator:       #45475a;
+    --cursor:          #cdd6f4;
+}
+
+/* Toolbar */
+.EasyMDEContainer .editor-toolbar {
+    background-color: var(--toolbar-bg) !important;
+    border-color: var(--toolbar-border) !important;
+}
+
+.EasyMDEContainer .editor-toolbar a,
+.EasyMDEContainer .editor-toolbar button {
+    color: var(--toolbar-icon) !important;
+}
+
+.EasyMDEContainer .editor-toolbar a:hover,
+.EasyMDEContainer .editor-toolbar button:hover {
+    background-color: var(--toolbar-hover) !important;
+    border-color: var(--toolbar-border) !important;
+    color: #fff !important;
+}
+
+.EasyMDEContainer .editor-toolbar a.active,
+.EasyMDEContainer .editor-toolbar button.active {
+    background-color: var(--toolbar-active) !important;
+    border-color: var(--toolbar-border) !important;
+    color: #fff !important;
+}
+
+.EasyMDEContainer .editor-toolbar i.separator {
+    border-color: var(--separator) !important;
+}
+
+/* Editor area (CodeMirror) */
+.EasyMDEContainer .CodeMirror {
+    background-color: var(--editor-bg) !important;
+    color: var(--editor-fg) !important;
+    border-color: var(--toolbar-border) !important;
+}
+
+.EasyMDEContainer .CodeMirror-scroll {
+    background-color: var(--editor-bg) !important;
+}
+
+.EasyMDEContainer .CodeMirror-cursor {
+    border-left-color: var(--cursor) !important;
+}
+
+.EasyMDEContainer .CodeMirror-selected {
+    background: #45475a !important;
+}
+
+/* Markdown syntax colors in editor */
+.EasyMDEContainer .cm-header         { color: #89b4fa !important; }
+.EasyMDEContainer .cm-strong         { color: #f38ba8 !important; font-weight: bold; }
+.EasyMDEContainer .cm-em             { color: #a6e3a1 !important; font-style: italic; }
+.EasyMDEContainer .cm-quote          { color: #9399b2 !important; }
+.EasyMDEContainer .cm-link           { color: #89dceb !important; }
+.EasyMDEContainer .cm-url            { color: #89b4fa !important; }
+.EasyMDEContainer .cm-comment        { color: #585b70 !important; }
+.EasyMDEContainer .cm-string         { color: #a6e3a1 !important; }
+
+/* Preview panel */
+.EasyMDEContainer .editor-preview,
+.EasyMDEContainer .editor-preview-side {
+    background-color: var(--preview-bg) !important;
+    color: var(--preview-fg) !important;
+    border-color: var(--preview-border) !important;
+}
+
+.EasyMDEContainer .editor-preview pre,
+.EasyMDEContainer .editor-preview-side pre {
+    background-color: #181825 !important;
+    border-color: #45475a !important;
+}
+
+.EasyMDEContainer .editor-preview code,
+.EasyMDEContainer .editor-preview-side code {
+    background-color: #181825 !important;
+    color: #cba6f7 !important;
+}
+
+.EasyMDEContainer .editor-preview h1,
+.EasyMDEContainer .editor-preview h2,
+.EasyMDEContainer .editor-preview h3,
+.EasyMDEContainer .editor-preview-side h1,
+.EasyMDEContainer .editor-preview-side h2,
+.EasyMDEContainer .editor-preview-side h3 {
+    color: #89b4fa !important;
+    border-color: #45475a !important;
+}
+
+.EasyMDEContainer .editor-preview blockquote,
+.EasyMDEContainer .editor-preview-side blockquote {
+    color: #9399b2 !important;
+    border-left-color: #45475a !important;
+}
+
+.EasyMDEContainer .editor-preview a,
+.EasyMDEContainer .editor-preview-side a {
+    color: #89dceb !important;
+}
+
+.EasyMDEContainer .editor-preview table th,
+.EasyMDEContainer .editor-preview table td,
+.EasyMDEContainer .editor-preview-side table th,
+.EasyMDEContainer .editor-preview-side table td {
+    border-color: #45475a !important;
+}
+
+.EasyMDEContainer .editor-preview table tr:nth-child(even),
+.EasyMDEContainer .editor-preview-side table tr:nth-child(even) {
+    background-color: #181825 !important;
+}
+
+/* Status bar */
+.EasyMDEContainer .editor-statusbar {
+    background-color: var(--toolbar-bg) !important;
+    color: #6c7086 !important;
+    border-color: var(--toolbar-border) !important;
+}
+
+/* Scrollbar */
+.EasyMDEContainer .CodeMirror-vscrollbar,
+.EasyMDEContainer .CodeMirror-hscrollbar {
+    background-color: var(--editor-bg) !important;
+}
+
+/* Fullscreen */
+.EasyMDEContainer.fullscreen .CodeMirror {
+    background-color: var(--editor-bg) !important;
+}

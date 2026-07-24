@@ -1,0 +1,125 @@
+{% extends 'base.html' %}
+
+{% block title %}
+  {% if current_category == 'software' %}Software
+  {% elif current_category == 'structural' %}Ingeniería Estructural
+  {% else %}Blog{% endif %} · ioseluiz
+{% endblock %}
+
+{% block content %}
+<div class="space-y-6">
+
+  <!-- Header -->
+  <div>
+    <h1 class="text-2xl sm:text-3xl font-bold" style="color:var(--c-dark)">
+      {% if current_category == 'software' %}Desarrollo de Software
+      {% elif current_category == 'structural' %}Ingeniería Estructural
+      {% else %}Blog{% endif %}
+    </h1>
+    <p class="mt-1 text-sm" style="color:var(--c-muted)">
+      Artículos sobre software e ingeniería estructural
+    </p>
+  </div>
+
+  <!-- Search -->
+  <form method="get" action="{% url 'posts:list' %}" class="flex gap-2">
+    <input
+      type="text" name="q" value="{{ q }}"
+      placeholder="Buscar artículos..."
+      class="search-input flex-1"
+    >
+    <button type="submit" class="btn-primary whitespace-nowrap px-4 py-2">
+      Buscar
+    </button>
+    {% if q %}
+      <a href="{% url 'posts:list' %}"
+         class="px-3 py-2 rounded-lg text-sm border whitespace-nowrap"
+         style="border-color:var(--c-border);color:var(--c-muted)">
+        ✕
+      </a>
+    {% endif %}
+  </form>
+
+  <!-- Category pills -->
+  <div class="flex flex-wrap gap-2">
+    <a href="{% url 'posts:list' %}"
+       class="pill {% if not current_category %}pill-active{% else %}pill-inactive{% endif %}">
+      Todos
+    </a>
+    {% for value, label in categories %}
+      <a href="{% url 'posts:by_category' value %}"
+         class="pill {% if current_category == value %}pill-active{% else %}pill-inactive{% endif %}">
+        {{ label }}
+      </a>
+    {% endfor %}
+  </div>
+
+  <!-- Result count -->
+  {% if q %}
+    <p class="text-sm" style="color:var(--c-muted)">
+      {{ posts.paginator.count }} resultado{{ posts.paginator.count|pluralize }}
+      para "<strong>{{ q }}</strong>"
+    </p>
+  {% endif %}
+
+  <!-- Post list -->
+  {% if posts %}
+    <div class="space-y-3">
+      {% for post in posts %}
+        <a href="{% url 'posts:detail' post.slug %}" class="card block p-4 sm:p-5 group">
+          <div class="flex items-start gap-3 sm:gap-4">
+            <div class="flex-1 min-w-0">
+              <!-- Meta row -->
+              <div class="flex flex-wrap items-center gap-2 mb-1.5">
+                <span class="badge-{{ post.category }} text-xs font-semibold px-2 py-0.5 rounded-full">
+                  {{ post.get_category_display }}
+                </span>
+                <time class="text-xs" style="color:var(--c-muted)">
+                  {{ post.created_at|date:"d M, Y" }}
+                </time>
+              </div>
+              <!-- Title -->
+              <h2 class="text-base sm:text-lg font-semibold leading-snug transition-colors"
+                  style="color:var(--c-dark)"
+                  onmouseover="this.style.color='var(--c-accent)'"
+                  onmouseout="this.style.color='var(--c-dark)'">
+                {{ post.title }}
+              </h2>
+            </div>
+            <!-- Cover thumbnail -->
+            {% if post.cover_image %}
+              <img src="{{ post.cover_image.url }}" alt=""
+                   class="w-16 h-14 sm:w-20 sm:h-16 object-cover rounded-lg flex-shrink-0">
+            {% endif %}
+          </div>
+        </a>
+      {% endfor %}
+    </div>
+
+    <!-- Pagination -->
+    {% if is_paginated %}
+      <nav class="flex justify-center items-center gap-2 mt-6 flex-wrap">
+        {% if page_obj.has_previous %}
+          <a href="?{% if q %}q={{ q }}&{% endif %}page={{ page_obj.previous_page_number }}"
+             class="pill pill-inactive">← Anterior</a>
+        {% endif %}
+        <span class="text-sm" style="color:var(--c-muted)">
+          {{ page_obj.number }} / {{ page_obj.paginator.num_pages }}
+        </span>
+        {% if page_obj.has_next %}
+          <a href="?{% if q %}q={{ q }}&{% endif %}page={{ page_obj.next_page_number }}"
+             class="pill pill-inactive">Siguiente →</a>
+        {% endif %}
+      </nav>
+    {% endif %}
+
+  {% else %}
+    <div class="text-center py-16" style="color:var(--c-muted)">
+      <div class="text-4xl mb-3">👻</div>
+      <p class="font-medium">No hay artículos todavía</p>
+      {% if q %}<p class="text-sm mt-1">Intenta con otros términos</p>{% endif %}
+    </div>
+  {% endif %}
+
+</div>
+{% endblock %}

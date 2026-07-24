@@ -1,0 +1,242 @@
+{% load static tailwind_tags %}
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>{% block title %}ioseluiz{% endblock %}</title>
+  {% tailwind_css %}
+  <link rel="stylesheet" href="{% static 'css/pygments.css' %}">
+  <style>
+    :root {
+      --c-dark:    #1F2937;
+      --c-slate:   #4B5E7A;
+      --c-ghost:   #ECEEF4;
+      --c-accent:  #3B6FE8;
+      --c-accent2: #2D5DD4;
+      --c-bg:      #F5F6FA;
+      --c-surface: #FFFFFF;
+      --c-border:  #DDE1EA;
+      --c-muted:   #64748B;
+    }
+    body { background-color: var(--c-bg); color: var(--c-dark); }
+
+    /* Navbar */
+    .navbar {
+      background: #1E3A5F;
+      border-bottom: 3px solid #4A90D9;   /* línea azul clara, define el límite */
+    }
+    .nav-logo img {
+      height: 38px;
+      width: auto;
+    }
+    .nav-link {
+      color: #ffffff;
+      font-size: 0.875rem;
+      font-weight: 500;
+      padding: 0.35rem 0.75rem;
+      border-radius: 0.375rem;
+      transition: background 0.15s, color 0.15s;
+    }
+    .nav-link:hover  { background: rgba(255,255,255,.18); color: #fff; }
+    .nav-link.active { background: var(--c-accent); color: #fff; }
+    .btn-primary {
+      background: var(--c-accent);
+      color: #fff;
+      font-size: 0.8125rem;
+      font-weight: 600;
+      padding: 0.4rem 1rem;
+      border-radius: 0.5rem;
+      transition: background 0.15s, box-shadow 0.15s;
+    }
+    .btn-primary:hover { background: var(--c-accent2); box-shadow: 0 0 0 3px rgba(59,111,232,.35); }
+    .btn-ghost {
+      color: #ffffff;
+      font-size: 0.8125rem;
+      font-weight: 500;
+      padding: 0.4rem 0.75rem;
+      border-radius: 0.5rem;
+      border: 1px solid rgba(255,255,255,.25);
+      transition: background 0.15s, border-color 0.15s, color 0.15s;
+    }
+    .btn-ghost:hover { background: rgba(255,255,255,.15); border-color: rgba(255,255,255,.5); color: #fff; }
+
+    /* Hamburger */
+    #mobile-menu { display: none; }
+    #mobile-menu.open { display: flex; }
+
+    /* Cards */
+    .card {
+      background: var(--c-surface);
+      border: 1px solid var(--c-border);
+      border-radius: 0.75rem;
+      transition: box-shadow 0.2s;
+    }
+    .card:hover { box-shadow: 0 4px 16px rgba(31,41,55,.08); }
+
+    /* Category badges */
+    .badge-software   { background: #DBEAFE; color: #1D4ED8; }
+    .badge-structural { background: #FEF3C7; color: #92400E; }
+
+    /* Pill buttons */
+    .pill { padding: 0.25rem 0.875rem; border-radius: 9999px; font-size: 0.8125rem; font-weight: 500; transition: background 0.15s, color 0.15s; }
+    .pill-active   { background: var(--c-accent); color: #fff; }
+    .pill-inactive { background: var(--c-ghost); color: var(--c-slate); }
+    .pill-inactive:hover { background: #D1D5DB; color: var(--c-dark); }
+
+    /* Search */
+    .search-input {
+      border: 1px solid var(--c-border);
+      border-radius: 0.5rem;
+      padding: 0.5rem 1rem;
+      font-size: 0.875rem;
+      width: 100%;
+      background: var(--c-surface);
+      color: var(--c-dark);
+      transition: border-color 0.15s, box-shadow 0.15s;
+    }
+    .search-input:focus { outline: none; border-color: var(--c-accent); box-shadow: 0 0 0 3px rgba(59,111,232,.15); }
+
+    /* Markdown prose */
+    .prose { color: var(--c-dark); line-height: 1.8; }
+    .prose h1,.prose h2,.prose h3,.prose h4 { color: var(--c-dark); font-weight: 700; margin-top: 1.75em; margin-bottom: 0.5em; }
+    .prose h1 { font-size: 1.875rem; }
+    .prose h2 { font-size: 1.5rem; border-bottom: 1px solid var(--c-border); padding-bottom: 0.35em; }
+    .prose h3 { font-size: 1.25rem; }
+    .prose p  { margin-bottom: 1.2em; }
+    .prose a  { color: var(--c-accent); text-decoration: underline; }
+    .prose a:hover { color: var(--c-accent2); }
+    .prose blockquote { border-left: 4px solid var(--c-accent); margin: 1.5em 0; padding: 0.5em 1.25em; background: var(--c-ghost); color: var(--c-slate); border-radius: 0 0.5rem 0.5rem 0; }
+    .prose pre { background: #1E2432; border-radius: 0.5rem; padding: 1.25rem; overflow-x: auto; margin: 1.5em 0; }
+    .prose code { background: var(--c-ghost); color: #C026D3; padding: 0.15em 0.4em; border-radius: 0.25rem; font-size: 0.88em; }
+    .prose pre code { background: transparent; color: inherit; padding: 0; }
+    .prose table { width: 100%; border-collapse: collapse; margin: 1.5em 0; font-size: 0.9rem; }
+    .prose th { background: var(--c-ghost); color: var(--c-dark); font-weight: 600; }
+    .prose th, .prose td { border: 1px solid var(--c-border); padding: 0.6em 1em; text-align: left; }
+    .prose tr:nth-child(even) td { background: #FAFBFE; }
+    .prose ul { list-style: disc; padding-left: 1.5em; margin-bottom: 1.2em; }
+    .prose ol { list-style: decimal; padding-left: 1.5em; margin-bottom: 1.2em; }
+    .prose li { margin-bottom: 0.4em; }
+    .prose img { max-width: 100%; border-radius: 0.5rem; box-shadow: 0 2px 12px rgba(0,0,0,.1); margin: 1.5em auto; display: block; }
+    .prose hr { border: none; border-top: 1px solid var(--c-border); margin: 2em 0; }
+
+    /* Codehilite (Pygments) inside prose */
+    .prose .codehilite { background: #1E2432; border-radius: 0.5rem; padding: 1.25rem; overflow-x: auto; margin: 1.5em 0; }
+    .prose .codehilite pre { background: transparent; padding: 0; margin: 0; }
+  </style>
+  <script>
+    window.MathJax = {
+      tex: {
+        inlineMath: [['$','$'],['\\(','\\)']],
+        displayMath: [['$$','$$'],['\\[','\\]']]
+      },
+      options: { skipHtmlTags: ['script','noscript','style','textarea','pre'] }
+    };
+  </script>
+  <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml.js" async></script>
+</head>
+<body>
+
+  <!-- ── Navbar ── -->
+  <nav class="navbar sticky top-0 z-50">
+    <div class="max-w-5xl mx-auto px-4 sm:px-6">
+      <div class="flex items-center justify-between h-14">
+
+        <!-- Logo -->
+        <a href="{% url 'posts:list' %}" class="nav-logo flex-shrink-0">
+          <img src="{% static 'img/logo_navbar.svg' %}" alt="ioseluiz">
+        </a>
+
+        <!-- Desktop nav -->
+        <div class="hidden sm:flex items-center gap-1">
+          <a href="{% url 'posts:by_category' 'software' %}" class="nav-link">Software</a>
+          <a href="{% url 'posts:by_category' 'structural' %}" class="nav-link">Ing. Estructural</a>
+          <span class="w-px h-5 mx-1" style="background:rgba(255,255,255,.3)"></span>
+          {% if user.is_authenticated %}
+            <span class="text-sm px-2" style="color:rgba(255,255,255,.7)">{{ user.username }}</span>
+            <form method="post" action="{% url 'accounts:logout' %}" class="inline">
+              {% csrf_token %}
+              <button type="submit" class="btn-ghost text-red-400 hover:text-red-300">Salir</button>
+            </form>
+          {% else %}
+            <a href="{% url 'accounts:login' %}" class="btn-ghost">Iniciar sesión</a>
+            <a href="{% url 'accounts:register' %}" class="btn-primary ml-1">Registrarse</a>
+          {% endif %}
+        </div>
+
+        <!-- Hamburger (mobile) -->
+        <button id="hamburger" class="sm:hidden flex flex-col gap-1.5 p-2 rounded focus:outline-none" aria-label="Menú">
+          <span class="block w-6 h-0.5 bg-gray-300 transition-all duration-200" id="h1"></span>
+          <span class="block w-6 h-0.5 bg-gray-300 transition-all duration-200" id="h2"></span>
+          <span class="block w-6 h-0.5 bg-gray-300 transition-all duration-200" id="h3"></span>
+        </button>
+      </div>
+    </div>
+
+    <!-- Mobile menu -->
+    <div id="mobile-menu" class="sm:hidden flex-col px-4 pb-4 gap-1" style="border-top:1px solid #162d4a">
+      <a href="{% url 'posts:by_category' 'software' %}" class="nav-link block py-2">Software</a>
+      <a href="{% url 'posts:by_category' 'structural' %}" class="nav-link block py-2">Ing. Estructural</a>
+      <div class="mt-2 pt-2" style="border-top:1px solid #162d4a">
+        {% if user.is_authenticated %}
+          <p class="text-sm px-2 py-1" style="color:#7FA8CC">{{ user.username }}</p>
+          <form method="post" action="{% url 'accounts:logout' %}">
+            {% csrf_token %}
+            <button type="submit" class="nav-link block w-full text-left" style="color:#F87171">Cerrar sesión</button>
+          </form>
+        {% else %}
+          <a href="{% url 'accounts:login' %}" class="nav-link block py-2">Iniciar sesión</a>
+          <a href="{% url 'accounts:register' %}" class="btn-primary block text-center mt-2 py-2">Registrarse</a>
+        {% endif %}
+      </div>
+    </div>
+  </nav>
+
+  <!-- Messages -->
+  {% if messages %}
+    <div class="max-w-5xl mx-auto px-4 sm:px-6 mt-4 space-y-2">
+      {% for message in messages %}
+        <div class="px-4 py-3 rounded-lg text-sm
+          {% if message.tags == 'success' %}bg-green-50 text-green-800 border border-green-200
+          {% elif message.tags == 'error' %}bg-red-50 text-red-800 border border-red-200
+          {% else %}bg-blue-50 text-blue-800 border border-blue-200{% endif %}">
+          {{ message }}
+        </div>
+      {% endfor %}
+    </div>
+  {% endif %}
+
+  <!-- Main -->
+  <main class="max-w-5xl mx-auto w-full px-4 sm:px-6 py-8 min-h-[calc(100vh-7rem)]">
+    {% block content %}{% endblock %}
+  </main>
+
+  <!-- Footer -->
+  <footer class="mt-auto" style="background:#1E3A5F; border-top:3px solid #4A90D9">
+    <div class="max-w-5xl mx-auto px-4 sm:px-6 py-6 flex flex-col sm:flex-row items-center justify-between gap-3">
+      <a href="{% url 'posts:list' %}" class="nav-logo flex-shrink-0 hover:opacity-80 transition-opacity">
+        <img src="{% static 'img/logo_footer.svg' %}" alt="ioseluiz">
+      </a>
+      <p class="text-sm" style="color:rgba(255,255,255,.5)">
+        © {% now "Y" %} · Desarrollo de Software &amp; Ingeniería Estructural
+      </p>
+    </div>
+  </footer>
+
+  <script>
+    // Hamburger toggle
+    const hamburger = document.getElementById('hamburger');
+    const mobileMenu = document.getElementById('mobile-menu');
+    const h1 = document.getElementById('h1');
+    const h2 = document.getElementById('h2');
+    const h3 = document.getElementById('h3');
+    hamburger.addEventListener('click', function () {
+      const open = mobileMenu.classList.toggle('open');
+      h1.style.transform = open ? 'translateY(8px) rotate(45deg)' : '';
+      h2.style.opacity   = open ? '0' : '1';
+      h3.style.transform = open ? 'translateY(-8px) rotate(-45deg)' : '';
+    });
+  </script>
+
+</body>
+</html>

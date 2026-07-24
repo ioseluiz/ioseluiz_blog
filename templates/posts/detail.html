@@ -1,0 +1,126 @@
+{% extends 'base.html' %}
+{% load markdown_extras %}
+
+{% block title %}{{ post.title }} · ioseluiz{% endblock %}
+
+{% block content %}
+<div class="max-w-3xl mx-auto">
+
+  <!-- Back -->
+  <a href="{% url 'posts:list' %}"
+     class="inline-flex items-center gap-1 text-sm mb-6 transition-colors"
+     style="color:var(--c-muted)"
+     onmouseover="this.style.color='var(--c-accent)'"
+     onmouseout="this.style.color='var(--c-muted)'">
+    ← Volver al blog
+  </a>
+
+  <!-- Post header -->
+  <header class="mb-8">
+    <div class="flex flex-wrap items-center gap-2 mb-3">
+      <span class="badge-{{ post.category }} text-xs font-semibold px-2.5 py-1 rounded-full">
+        {{ post.get_category_display }}
+      </span>
+      <time class="text-sm" style="color:var(--c-muted)">
+        {{ post.created_at|date:"d \d\e F, Y" }}
+      </time>
+    </div>
+    <h1 class="text-2xl sm:text-4xl font-bold leading-tight mb-3" style="color:var(--c-dark)">
+      {{ post.title }}
+    </h1>
+    <p class="text-sm" style="color:var(--c-muted)">
+      Por <strong style="color:var(--c-slate)">
+        {{ post.author.get_full_name|default:post.author.username }}
+      </strong>
+    </p>
+    {% if post.cover_image %}
+      <img src="{{ post.cover_image.url }}" alt="{{ post.title }}"
+           class="w-full max-h-72 object-cover rounded-xl mt-6 shadow-md">
+    {% endif %}
+  </header>
+
+  <!-- Content -->
+  <article class="prose max-w-none">
+    {{ post.content|markdown }}
+  </article>
+
+  <!-- Divider -->
+  <hr class="my-10" style="border-color:var(--c-border)">
+
+  <!-- Comments -->
+  <section id="comentarios">
+    <h2 class="text-xl sm:text-2xl font-bold mb-6" style="color:var(--c-dark)">
+      Comentarios
+      <span class="text-base font-normal ml-1" style="color:var(--c-muted)">
+        ({{ comments|length }})
+      </span>
+    </h2>
+
+    {% if comments %}
+      <div class="space-y-4 mb-8">
+        {% for comment in comments %}
+          <div class="card p-4 sm:p-5">
+            <div class="flex flex-wrap items-center justify-between gap-2 mb-2">
+              <span class="font-semibold text-sm" style="color:var(--c-dark)">
+                {{ comment.author.get_full_name|default:comment.author.username }}
+              </span>
+              <time class="text-xs" style="color:var(--c-muted)">
+                {{ comment.created_at|date:"d M, Y H:i" }}
+              </time>
+            </div>
+            <p class="text-sm leading-relaxed" style="color:var(--c-slate)">
+              {{ comment.content }}
+            </p>
+          </div>
+        {% endfor %}
+      </div>
+    {% else %}
+      <p class="text-sm mb-8" style="color:var(--c-muted)">
+        Aún no hay comentarios. ¡Sé el primero!
+      </p>
+    {% endif %}
+
+    <!-- Comment form -->
+    {% if user.is_authenticated %}
+      <div class="card p-5 sm:p-6">
+        <h3 class="text-base font-semibold mb-4" style="color:var(--c-dark)">
+          Dejar un comentario
+        </h3>
+        <form method="post" action="{% url 'comments:add' post.slug %}">
+          {% csrf_token %}
+          <textarea
+            name="content" rows="4" required
+            placeholder="Escribe tu comentario..."
+            class="search-input resize-y mb-3"
+          ></textarea>
+          <div class="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-3">
+            <p class="text-xs" style="color:var(--c-muted)">
+              Tu comentario será visible tras ser aprobado.
+            </p>
+            <button type="submit" class="btn-primary py-2 px-5 w-full sm:w-auto">
+              Enviar comentario
+            </button>
+          </div>
+        </form>
+      </div>
+    {% else %}
+      <div class="card p-5 text-center" style="background:var(--c-ghost)">
+        <p class="text-sm mb-4" style="color:var(--c-slate)">
+          Inicia sesión para dejar un comentario.
+        </p>
+        <div class="flex justify-center gap-3">
+          <a href="{% url 'accounts:login' %}?next={{ request.path }}" class="btn-primary py-2 px-4">
+            Iniciar sesión
+          </a>
+          <a href="{% url 'accounts:register' %}"
+             class="py-2 px-4 rounded-lg text-sm border font-medium"
+             style="border-color:var(--c-border);color:var(--c-slate)">
+            Registrarse
+          </a>
+        </div>
+      </div>
+    {% endif %}
+  </section>
+
+</div>
+{% endblock %}
