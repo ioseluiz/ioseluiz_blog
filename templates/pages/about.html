@@ -1,0 +1,131 @@
+{% extends 'base.html' %}
+
+{% block title %}Acerca de · ioseluiz{% endblock %}
+
+{% block content %}
+<div class="max-w-2xl mx-auto">
+
+  <!-- Perfil -->
+  <div class="card p-8 mb-6 text-center">
+    <!-- Avatar placeholder -->
+    <div class="mx-auto mb-4 flex items-center justify-center rounded-full"
+         style="width:96px;height:96px;background:#1E3A5F">
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="white" width="52" height="52">
+        <path d="M12 12c2.7 0 4.8-2.1 4.8-4.8S14.7 2.4 12 2.4 7.2 4.5 7.2 7.2 9.3 12 12 12zm0 2.4c-3.2 0-9.6 1.6-9.6 4.8v2.4h19.2v-2.4c0-3.2-6.4-4.8-9.6-4.8z"/>
+      </svg>
+    </div>
+
+    <h1 class="text-2xl font-bold mb-1" style="color:var(--c-dark)">José Luis Muñoz</h1>
+    <p class="text-sm font-medium mb-4" style="color:var(--c-accent)">
+      Software Developer &amp; Ingeniero Estructural
+    </p>
+
+    <!-- Redes sociales -->
+    <div class="flex justify-center gap-4 mb-6">
+      <!-- YouTube -->
+      <a href="#" target="_blank" rel="noopener noreferrer" aria-label="YouTube"
+         class="social-icon-btn" title="YouTube">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" width="22" height="22">
+          <path d="M23.498 6.186a3.016 3.016 0 0 0-2.122-2.136C19.505 3.545 12 3.545 12 3.545s-7.505 0-9.377.505A3.017 3.017 0 0 0 .502 6.186C0 8.07 0 12 0 12s0 3.93.502 5.814a3.016 3.016 0 0 0 2.122 2.136c1.871.505 9.376.505 9.376.505s7.505 0 9.377-.505a3.015 3.015 0 0 0 2.122-2.136C24 15.93 24 12 24 12s0-3.93-.502-5.814zM9.545 15.568V8.432L15.818 12l-6.273 3.568z"/>
+        </svg>
+      </a>
+      <!-- X / Twitter -->
+      <a href="#" target="_blank" rel="noopener noreferrer" aria-label="X"
+         class="social-icon-btn" title="X (Twitter)">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" width="20" height="20">
+          <path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-4.714-6.231-5.401 6.231H2.746l7.73-8.835L1.254 2.25H8.08l4.713 6.231 5.45-6.231zm-1.161 17.52h1.833L7.084 4.126H5.117L17.083 19.77z"/>
+        </svg>
+      </a>
+      <!-- TikTok -->
+      <a href="#" target="_blank" rel="noopener noreferrer" aria-label="TikTok"
+         class="social-icon-btn" title="TikTok">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" width="20" height="20">
+          <path d="M12.525.02c1.31-.02 2.61-.01 3.91-.02.08 1.53.63 3.09 1.75 4.17 1.12 1.11 2.7 1.62 4.24 1.79v4.03c-1.44-.05-2.89-.35-4.2-.97-.57-.26-1.1-.59-1.62-.93-.01 2.92.01 5.84-.02 8.75-.08 1.4-.54 2.79-1.35 3.94-1.31 1.92-3.58 3.17-5.91 3.21-1.43.08-2.86-.31-4.08-1.03-2.02-1.19-3.44-3.37-3.65-5.71-.02-.5-.03-1-.01-1.49.18-1.9 1.12-3.72 2.58-4.96 1.66-1.44 3.98-2.13 6.15-1.72.02 1.48-.04 2.96-.04 4.44-.99-.32-2.15-.23-3.02.37-.63.41-1.11 1.04-1.36 1.75-.21.51-.15 1.07-.14 1.61.24 1.64 1.82 3.02 3.5 2.87 1.12-.01 2.19-.66 2.77-1.61.19-.33.4-.67.41-1.06.1-1.79.06-3.57.07-5.36.01-4.03-.01-8.05.02-12.07z"/>
+        </svg>
+      </a>
+    </div>
+
+    <!-- Bio -->
+    <p class="text-sm leading-relaxed" style="color:var(--c-muted)">
+      Bienvenido a mi blog. Aquí escribo sobre desarrollo de software e ingeniería estructural —
+      dos disciplinas que comparten más de lo que parece: rigor, resolución de problemas y
+      construcción de cosas que duran.
+    </p>
+  </div>
+
+  <!-- Áreas -->
+  <div class="grid grid-cols-1 sm:grid-cols-2 gap-4 mb-6">
+    <div class="card p-6">
+      <div class="flex items-center gap-3 mb-3">
+        <span class="text-2xl">💻</span>
+        <h2 class="font-bold text-base" style="color:var(--c-dark)">Desarrollo de Software</h2>
+      </div>
+      <p class="text-sm leading-relaxed" style="color:var(--c-muted)">
+        Programación en Python, Django, APIs REST y automatización. Me interesa construir
+        herramientas útiles y escribir código limpio y mantenible.
+      </p>
+    </div>
+    <div class="card p-6">
+      <div class="flex items-center gap-3 mb-3">
+        <span class="text-2xl">🏗️</span>
+        <h2 class="font-bold text-base" style="color:var(--c-dark)">Ingeniería Estructural</h2>
+      </div>
+      <p class="text-sm leading-relaxed" style="color:var(--c-muted)">
+        Análisis y diseño de estructuras, modelado computacional y aplicación de métodos
+        numéricos a problemas de ingeniería civil.
+      </p>
+    </div>
+  </div>
+
+  <!-- Contacto / redes -->
+  <div class="card p-6">
+    <h2 class="font-bold text-base mb-4" style="color:var(--c-dark)">Encuéntrame en</h2>
+    <div class="flex flex-col gap-3">
+
+      <a href="#" target="_blank" rel="noopener noreferrer"
+         class="flex items-center gap-3 text-sm hover:underline" style="color:var(--c-accent)">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" width="20" height="20">
+          <path d="M23.498 6.186a3.016 3.016 0 0 0-2.122-2.136C19.505 3.545 12 3.545 12 3.545s-7.505 0-9.377.505A3.017 3.017 0 0 0 .502 6.186C0 8.07 0 12 0 12s0 3.93.502 5.814a3.016 3.016 0 0 0 2.122 2.136c1.871.505 9.376.505 9.376.505s7.505 0 9.377-.505a3.015 3.015 0 0 0 2.122-2.136C24 15.93 24 12 24 12s0-3.93-.502-5.814zM9.545 15.568V8.432L15.818 12l-6.273 3.568z"/>
+        </svg>
+        YouTube — @ioseluiz
+      </a>
+
+      <a href="#" target="_blank" rel="noopener noreferrer"
+         class="flex items-center gap-3 text-sm hover:underline" style="color:var(--c-accent)">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" width="18" height="18">
+          <path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-4.714-6.231-5.401 6.231H2.746l7.73-8.835L1.254 2.25H8.08l4.713 6.231 5.45-6.231zm-1.161 17.52h1.833L7.084 4.126H5.117L17.083 19.77z"/>
+        </svg>
+        X — @ioseluiz
+      </a>
+
+      <a href="#" target="_blank" rel="noopener noreferrer"
+         class="flex items-center gap-3 text-sm hover:underline" style="color:var(--c-accent)">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" width="18" height="18">
+          <path d="M12.525.02c1.31-.02 2.61-.01 3.91-.02.08 1.53.63 3.09 1.75 4.17 1.12 1.11 2.7 1.62 4.24 1.79v4.03c-1.44-.05-2.89-.35-4.2-.97-.57-.26-1.1-.59-1.62-.93-.01 2.92.01 5.84-.02 8.75-.08 1.4-.54 2.79-1.35 3.94-1.31 1.92-3.58 3.17-5.91 3.21-1.43.08-2.86-.31-4.08-1.03-2.02-1.19-3.44-3.37-3.65-5.71-.02-.5-.03-1-.01-1.49.18-1.9 1.12-3.72 2.58-4.96 1.66-1.44 3.98-2.13 6.15-1.72.02 1.48-.04 2.96-.04 4.44-.99-.32-2.15-.23-3.02.37-.63.41-1.11 1.04-1.36 1.75-.21.51-.15 1.07-.14 1.61.24 1.64 1.82 3.02 3.5 2.87 1.12-.01 2.19-.66 2.77-1.61.19-.33.4-.67.41-1.06.1-1.79.06-3.57.07-5.36.01-4.03-.01-8.05.02-12.07z"/>
+        </svg>
+        TikTok — @ioseluiz
+      </a>
+
+    </div>
+  </div>
+
+</div>
+
+<style>
+  .social-icon-btn {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    background: var(--c-ghost);
+    color: var(--c-slate);
+    transition: background 0.15s, color 0.15s;
+  }
+  .social-icon-btn:hover {
+    background: var(--c-accent);
+    color: #fff;
+  }
+</style>
+{% endblock %}
