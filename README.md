@@ -13,10 +13,12 @@ Blog personal sobre Desarrollo de Software e Ingeniería Estructural, construido
 | Markdown | Python-Markdown + pymdownx + Pygments |
 | Fórmulas matemáticas | MathJax v3 |
 | Editor admin | EasyMDE (dark theme) |
+| Animaciones | matplotlib FuncAnimation → HTML iframe |
 
 ## Funcionalidades
 
 - **Posts** en Markdown con soporte de fórmulas matemáticas (`$...$`, `$$...$$`), snippets de código con syntax highlighting e imágenes incrustadas
+- **Animaciones interactivas** generadas con matplotlib (`FuncAnimation`) embebidas como `<iframe>` en el cuerpo del post
 - **Dos categorías**: Desarrollo de Software e Ingeniería Estructural
 - **Buscador** de posts por título y contenido
 - **Registro y autenticación** de usuarios
@@ -93,6 +95,58 @@ make shell           # Shell de Django
 make logs            # Ver logs del servidor
 make tailwind-build  # Compilar CSS de producción
 ```
+
+## Animaciones interactivas (matplotlib)
+
+Es posible incrustar animaciones de matplotlib directamente en el cuerpo de un post usando `FuncAnimation.to_jshtml()`. El archivo resultante es HTML autocontenido con controles play/pause/loop. El flujo completo es:
+
+### 1. Generar la animación en Python (en tu máquina local)
+
+```python
+import matplotlib.pyplot as plt
+import matplotlib.animation as animation
+import numpy as np
+
+fig, ax = plt.subplots()
+x = np.linspace(0, 2 * np.pi, 300)
+line, = ax.plot(x, np.sin(x))
+
+def update(frame):
+    line.set_ydata(np.sin(x + frame / 10))
+    return (line,)
+
+anim = animation.FuncAnimation(fig, update, frames=100, interval=50, blit=True)
+
+# Guardar como HTML autocontenido
+with open("mi_animacion.html", "w") as f:
+    f.write(anim.to_jshtml())
+
+plt.close()
+```
+
+Dependencias necesarias localmente:
+
+```bash
+pip install matplotlib numpy
+```
+
+### 2. Subir la animación desde el admin
+
+1. Ir a `/admin/` → **Animaciones** → **Añadir animación**
+2. Completar el título y seleccionar el archivo `.html` generado
+3. Guardar — el campo **Código iframe** aparece con el HTML listo para copiar
+
+### 3. Incrustar en el post
+
+En el editor Markdown del post, pegar el código iframe copiado del admin:
+
+```html
+<iframe src="/media/animations/mi_animacion.html" width="700" height="500" frameborder="0" allowfullscreen></iframe>
+```
+
+El Markdown del blog acepta HTML directo, por lo que el `<iframe>` se renderiza sin ninguna configuración adicional.
+
+> **Nota sobre tamaño**: `to_jshtml()` incrusta cada frame como imagen base64 dentro del HTML. Una animación de 100 frames en 720p puede pesar varios MB. Para posts públicos conviene mantener frames ≤ 100 y resolución moderada (`figsize=(8, 4)`, `dpi=80`).
 
 ## Estructura del proyecto
 
